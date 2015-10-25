@@ -125,3 +125,16 @@ class Date(JsonType):
       return datetime.date(year, month, day)
     except ValueError as e:
       raise ValidationError(e.message)
+
+class Any(JsonType):
+  def __name(self, depth):
+    return "any"
+
+  def _check(self, value):
+    return True
+
+  def _to_json(self, value):
+    return value
+
+  def _from_json(self, value):
+    return value

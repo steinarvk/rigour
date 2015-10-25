@@ -123,6 +123,27 @@ def test_luhn_validation():
   print(message)
   assert "invalid check digit" in message
 
+def test_extra_dict():
+  req = {
+    "username": "svk",
+    "password": "hunter2",
+    "extra": {
+      "hello": "world",
+      "hi": "there",
+    },
+  }
+  val = rigour.from_json(Request, req)
+  assert val.extra == {"hello": "world", "hi": "there"}
+
+def test_extra_number():
+  req = {
+    "username": "svk",
+    "password": "hunter2",
+    "extra": 4,
+  }
+  val = rigour.from_json(Request, req)
+  assert val.extra == 4
+
 def test_array():
   req = {
     "username": "svk",

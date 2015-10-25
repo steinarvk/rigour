@@ -61,4 +61,5 @@ Request = Object(
   payment_info = Object(
     card_number = CardNumber().constrain(luhn_algorithm),
   ).secret().optional(),
+  extra = Any().optional(),
 )
