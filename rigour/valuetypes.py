@@ -20,6 +20,7 @@ from rigour.basetypes import JsonType
 import dateutil.parser
 import datetime
 import re
+import sys
 
 class _SimpleType(JsonType):
   def __init__(self, python_type, type_name=None):
@@ -41,15 +42,27 @@ class _SimpleType(JsonType):
 
 class String(_SimpleType):
   def __init__(self):
-    _SimpleType.__init__(self, (unicode, str), "string")
+    if sys.version_info.major == 2:
+      types = (unicode, str)
+    else:
+      types = (str,)
+    _SimpleType.__init__(self, types, "string")
 
 class Integer(_SimpleType):
   def __init__(self):
-    _SimpleType.__init__(self, (int, long), "integer")
+    if sys.version_info.major == 2:
+      types = (int, long)
+    else:
+      types = (int,)
+    _SimpleType.__init__(self, types, "integer")
 
 class Float(_SimpleType):
   def __init__(self):
-    _SimpleType.__init__(self, (float, int, long), "floating-point")
+    if sys.version_info.major == 2:
+      types = (float, int, long)
+    else:
+      types = (float, int)
+    _SimpleType.__init__(self, types, "floating-point")
 
 class StringEnum(JsonType):
   def __init__(self, *choices):

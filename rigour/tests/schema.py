@@ -38,7 +38,7 @@ def luhn_algorithm(number):
   """An example domain-specific checker, the Luhn check digit algorithm."""
   if not number.isdigit():
     raise ValidationFailed("expected a purely numeric string")
-  digits = map(int, number)
+  digits = list(map(int, number))
   v = sum(digits[-1::-2]) + sum(sum(map(int,str(2*x))) for x in digits[-2::-2])
   if v % 10:
     raise ValidationFailed("invalid check digit")

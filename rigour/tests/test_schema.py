@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from __future__ import absolute_import
+from __future__ import print_function
 
 from rigour.errors import ValidationFailed
 from rigour.tests.schema import Request
@@ -37,7 +38,7 @@ def test_basic_invalid():
   with pytest.raises(ValidationFailed) as excinfo:
     rigour.from_json(Request, req)
   message = str(excinfo)
-  print message
+  print(message)
   assert "username:" in message
   assert "too short" in message
   assert "value was: 'x'" in message
@@ -50,7 +51,7 @@ def test_secret_invalid():
   with pytest.raises(ValidationFailed) as excinfo:
     rigour.from_json(Request, req)
   message = str(excinfo)
-  print message
+  print(message)
   assert "password:" in message
   assert "too short" in message
   assert "hunt" not in message
@@ -82,7 +83,7 @@ def test_required_nested_field():
   with pytest.raises(ValidationFailed) as excinfo:
     rigour.from_json(Request, req)
   message = str(excinfo)
-  print message
+  print(message)
   assert "name: missing field 'family_name'" in message
 
 def test_string_enum_valid():
@@ -103,7 +104,7 @@ def test_string_enum_invalid():
   with pytest.raises(ValidationFailed) as excinfo:
     rigour.from_json(Request, req)
   message = str(excinfo)
-  print message
+  print(message)
   assert "gender:" in message
   assert "femal3" in message
   assert "female" in message
@@ -119,7 +120,7 @@ def test_luhn_validation():
   with pytest.raises(ValidationFailed) as excinfo:
     rigour.from_json(Request, req)
   message = str(excinfo)
-  print message
+  print(message)
   assert "invalid check digit" in message
 
 def test_array():
@@ -140,7 +141,7 @@ def test_array_with_wrong_type():
   with pytest.raises(ValidationFailed) as excinfo:
     rigour.from_json(Request, req)
   message = str(excinfo)
-  print message
+  print(message)
   assert "expected string" in message
 
 def test_fixed_array_valid():
@@ -162,7 +163,7 @@ def test_fixed_array_wrong_length():
   with pytest.raises(ValidationFailed) as excinfo:
     rigour.from_json(Request, req)
   message = str(excinfo)
-  print message
+  print(message)
   assert "expected 2 elements, got 3" in message
 
 def test_full_type_name():
@@ -224,5 +225,5 @@ def test_nonexistent():
   with pytest.raises(ValidationFailed) as excinfo:
     rigour.from_json(Request, req)
   message = str(excinfo)
-  print message
+  print(message)
   assert "'this_field_does_not_exist'" in message
